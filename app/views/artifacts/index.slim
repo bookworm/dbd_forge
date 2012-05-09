@@ -1,0 +1,7 @@
+.artifacts
+  ul         
+  - @artifacts.each do |artifact|
+    li 
+      a href==url(:artifacts, :show, :slug => artifact.slug)
+        h3.name== artifact.name
+        .intro== artifact.intro

@@ -1,0 +1,114 @@
+> mount api_v1 - /api/v1
+> setup tests     
+> app.rb
+> accounts controller     
+> sessions controller    
+> artifacts controller        
+> main controller     
+> key controllers
+> artifacts views
+> accounts views
+> sessions views 
+> layout view  
+  > header
+  > nav
+  > container/yield 
+> api_v1/app.rb     
+> key on account page
+> acl for app       
+  > accounts
+  > sessions
+  > keys
+> go over models and add mongomapper exts    
+> get api_v1 routes corrected
+> disable oauth_check on test
+> seeds:
+  > artifacts 
+  > accounts
+  > integrations 
+  > rest of artifact seeds
+> subscribe on account form    
+> keys js   
+> stripe js on accounts pages.           
+
+> update
+> make sure console is working
+> make sure start is working          
+> seed with data
+- all tests working   
+ > models    
+   > keys
+   > account
+   > artifact
+   > plan
+   > vulnerability
+ > api     
+   > artifact
+   > artifacts
+ - app controllers 
+   > accounts    
+   > sessions
+   > main
+   > artifacts
+   > keys
+
+# Plans:
+  > plan model
+  > $25/month subscription plan
+  > add plan to dev db and test dbd      
+  > subscribe on account submit
+  
+  No need for a for plan controller cause only one plan.
+  
+i will go with one accesskey one site for now.         
+since an access key has pub and private we just return a singlekey from account. swap out methods later for mutle keys.
+voila 
+
+DO the key on the account/show page. click to regenerate
+
+# Tests    
+app controllers: 
+  > artifacts
+  > accounts    
+    > subscribe to plan. need to add support to garry first.
+  > sessions 
+  > keys    
+  > main
+api controllers
+  > artifact 
+  > artifacts
+models:  
+  > artifact   
+  > account 
+  > AccessKey    
+  > vulnerability 
+  > plan
+
+# - Go Over Site
+ 
+# - Content
+
+  - main view 
+    - index  
+    - about
+    - terms of service
+    - support
+    - learn more
+    - faq     
+    - privacy
+            
+# Future                    
+- buy artifacts
+- wepay on users
+- event hook for stripe pay.   
+- rabl json views for api     
+- downloads with permissions on artifacts    
+  - generate download on artfiact. should create a zip file.           
+- accounts page to manage keys. keys are "keyed" to a domain. hehe I made a pun.        
+- file uploads on artifacts.   
+- todo details about incompatibilities. not sure how to work this.    
+- multiple version management. link to specific versions      
+- copy key.
+
+Switch ext_name to Slug
+- add dbd_name to artifacts

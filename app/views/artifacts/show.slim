@@ -1,0 +1,17 @@
+.meta
+  h1.artifact_name== @artifact.name
+  span.version== @artifact.version
+  
+.details     
+  .desc== @artifact.desc
+  .install
+    .instructions
+      strong install
+      span== @artifact.install_instructions     
+
+.more_meta
+  .section.links
+    h5 Links
+    ul
+      li.homepage
+        a href==@artifact.homepage Homepage

@@ -1,0 +1,77 @@
+.row
+  .span6.columns
+    fieldset
+      = form_for @account, (defined?(editing) ? url(:accounts, :update) : url(:accounts, :new)), {:class => 'form-stacked', :method => (defined?(editing) ? "put" : "post")} do |f|
+        - if @account.errors.any?
+          .alert-message.block-message.error
+            p #{pluralize(account.errors.count, "problem")} with your registration:
+            .errors
+              - @account.errors.full_messages.each do |msg|
+                p== msg
+
+        .clearfix
+          ==f.label :name
+          .input
+            == f.text_field :name, :class => "field"
+
+        .clearfix
+          == f.label :email
+          .input
+            == f.text_field :email, :class => "field"
+
+        .clearfix
+          == f.label :password
+          .input
+            == f.password_field :password, :class => "field"
+            - if defined? editing
+              span.help-block Leave blank to keep your current password
+
+        .clearfix
+          == f.label :password_confirmation
+          .input
+            == f.password_field :password_confirmation, :class => "field"   
+            
+          == f.hidden_field :stripe_token
+          == f.hidden_field :last_4_digits
+            
+        - if @account.last_4_digits
+          #change-card.clearfix
+            label Card
+            .input
+              span=="Using card ending with #{@account.last_4_digits}"  
+            a href="#" (change)  
+
+        noscript
+          p This form requires Javascript to use  
+
+        #credit-card style==(@account.last_4_digits ? "display:none" : "display:block")
+          #credit-card-errors style="display:none"
+            #stripe-error-message.alert-message.block-message.error
+
+          .clearfix
+            == f.label :credit_card_number
+            .input
+              == f.text_field :credit_card_number, :value => params[:credit_card_number], :class => "field", :disabled => true
+
+          .clearfix
+            == f.label :cvc, :text => "Security code (CVC)"
+            .input
+              == f.text_field :cvc, :value => params[:cvc], :class => "small", :disabled => true
+
+          .clearfix
+            == f.label :expiry_date_month
+            .input
+              == f.text_field :expiry_date_month, :type => "datetime-local"             
+              
+          .clearfix
+            == f.label :expiry_date_year
+            .input
+              == f.text_field :expiry_date_year, :type => "datetime-local"   
+                                                                               
+          span.note Your credit card details will be sent directly to our payment processor     
+
+        .actions 
+          == token_field_tag      
+          - if !defined?(editing)
+            == text_field_tag :plan, :value => 'main' 
+          == f.submit((defined?(editing) ? "Update" : "Register"), :class => "btn primary", :id => :account_submit)   

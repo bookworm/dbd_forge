@@ -1,0 +1,16 @@
+li 
+  a href==url(:artifacts, :index) Artifacts
+li 
+  a href==url(:main, :learn) Learn More
+li
+  a href==url(:main, :faq) FAQ
+li.submenu 
+  ul
+    - if current_account
+      li 
+        a href==url(:sessions, :destroy) Sign Out    
+      li 
+        a href==url(:accounts, :show) Account    
+    - else
+      li
+        a href==url(:sessions, :new) Sign In     
