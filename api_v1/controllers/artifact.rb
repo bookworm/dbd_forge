@@ -6,35 +6,35 @@ ForgeApiV1.controllers :artifact, :provides => [:json, :html] do
         
   # Artifact
   before(:show, :incompatible, :integrated, :compatible, :dependencies) do 
-    @artifact = Artifact.first(:ext_name => params[:name])   
+    @artifact = Artifact.findy_by_slug(params[:slug])   
     halt 404 unless @artifact 
   end    
   
-  get :show, :map => "/artifacts/:name", :priority => :low do    
+  get :show, :map => "/artifacts/:slug", :priority => :low do    
     data         = {:data => @artifact}
     data.to_json
   end
   
-  get :incompatible, :map => "/artifacts/:name/incompatible" do  
+  get :incompatible, :map => "/artifacts/:slug/incompatible" do  
     incompatible = @artifact.incompatibilities
     data         = {:data => {:artifacts => incompatible, :count => incompatible.count} }
     data.to_json
   end   
   
-  get :integrated, :map => "/artifacts/:name/integrated" do  
+  get :integrated, :map => "/artifacts/:slug/integrated" do  
     integrated = @artifact.integrations
     data       = {:data => {:artifacts => integrated, :count => integrated.count} }
     
     data.to_json
   end 
   
-  get :compatible, :map => "/artifacts/:name/compatible" do  
+  get :compatible, :map => "/artifacts/:slug/compatible" do  
     compatible = @artifact.compatibilities 
     data       = {:data => {:artifacts => compatible, :count => compatible.count} }
     data.to_json
   end   
   
-  get :dependencies, :map => "/artifacts/:name/dependencies" do  
+  get :dependencies, :map => "/artifacts/:slug/dependencies" do  
     dependencies = @artifact.dependencies
     data         = {:data => {:artifacts => dependencies, :count => dependencies.count} }
     data.to_json

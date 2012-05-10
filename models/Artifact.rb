@@ -1,7 +1,6 @@
 require 'redcarpet'
 class Artifact
   include MongoMapper::Document    
-  include MongoMapperExt::Slugizer
   include MongoMapperExt::Tags 
   include MongoMapperExt::Markdown
   plugin MongoMapper::Plugins::Timestamps
@@ -30,10 +29,15 @@ class Artifact
   key :vulnerable_ids, Array      
 
   # Key Settings.  
-  slug_key :name, :unique => false  
   mount_uploader :image, ImageUploader
   timestamps!    
-  markdown :desc, :intro
+  markdown :desc, :intro    
+  
+  ##
+  # Callbacks
+  # 
+  
+  before_save :gen_slug
   
   ## 
   # Associations
@@ -44,15 +48,6 @@ class Artifact
   many :integrations,      :in => :integration_ids,  :class => Artifact       
   
   many :vulnerabilities, :in => :vulnerable_ids, :class => Vulnerability 
-  # , do        
-  #   def vulnerable()  
-  #     where(:fixed => false)
-  #   end
-  #   
-  #   def fixed()  
-  #     where(:fixed => true)
-  #   end
-  # end   
   
   ##
   # Scopes
@@ -61,7 +56,7 @@ class Artifact
   scope :with_incompatibilities, where(:incompatible_ids => {'$not' => { '$size' => 0 } })
   scope :with_dependencies, where(:dependent_ids => {'$not' => { '$size' => 0 } })
   scope :with_vulnerabilities, where(:vulnerabilities => {'$not' => { '$size' => 0 } }) 
-  scope :with_compatibilities, where(:vulnerabilities => {'$not' => { '$size' => 0 } }) 
+  scope :with_compatibilities, where(:vulnerabilities => {'$not' => { '$size' => 0 } })    
   
   scope :with_all, where(:integration_ids => {'$not' => { '$size' => 0 } },  
     :incompatible_ids => {'$not' => { '$size' => 0 } },   
@@ -69,10 +64,16 @@ class Artifact
     :dependent_ids    => {'$not' => { '$size' => 0 } },
     :vulnerable_ids   => {'$not' => { '$size' => 0 } },      
     :integration_ids  => {'$not' => { '$size' => 0 } }   
-  )     
+  ) 
+  
+  ## 
+  # Validations
+  # 
+  
+  validates_uniqueness_of :slug, :if => :slug_required?   
   
   ##
-  # Accesores
+  # Accessors
   #
   
   def package()
@@ -126,6 +127,24 @@ class Artifact
   end 
   
   def install_instructions()     
-    return "forge install #{self.ext_name}"
+    return "forge install #{self.slug}"
+  end 
+  
+  ##
+  # Validations
+  #
+  
+  def slug_required?() 
+    return !self[:slug].blank?
+  end       
+  
+  ##
+  # Callbacks
+  # 
+  
+  def gen_slug()         
+    if self.slug.blank?         
+      self[:slug] = self.ext_name.parameterize.underscore
+    end
   end
 end

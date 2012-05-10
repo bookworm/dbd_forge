@@ -21,12 +21,12 @@ ForgeApiV1.controllers :artifacts, :provides => [:json, :html] do
     end         
   
     if params[:filter]
-      @options[:ext_name] = {"$nin" => params[:filter].to_s.downcase.split(",").join(" ").split(" ").uniq }
+      @options[:slug] = {"$nin" => params[:filter].to_s.downcase.split(",").join(" ").split(" ").uniq }
     end    
     
     if params[:only] 
-      @options[:ext_name] ||= {}
-      @options[:ext_name].merge!({"$in" => params[:only].to_s.downcase.split(",").join(" ").split(" ").uniq })
+      @options[:slug] ||= {}
+      @options[:slug].merge!({"$in" => params[:only].to_s.downcase.split(",").join(" ").split(" ").uniq })
     end
   
     @options.delete_if {|key, value| value == nil }      
