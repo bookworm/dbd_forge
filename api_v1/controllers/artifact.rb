@@ -6,7 +6,7 @@ ForgeApiV1.controllers :artifact, :provides => [:json, :html] do
         
   # Artifact
   before(:show, :incompatible, :integrated, :compatible, :dependencies) do 
-    @artifact = Artifact.findy_by_slug(params[:slug])   
+    @artifact = Artifact.find_by_slug(params[:slug])   
     halt 404 unless @artifact 
   end    
   

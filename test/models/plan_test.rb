@@ -10,7 +10,7 @@ describe "Plan Model" do
   
   should "subscribe an account to a plan" do    
     plan = Plan.find_by_name('main')
-    account = Account.first(:plan_id => nil)             
+    account = Account.card.first(:plan_id => nil)  
     account.subscribe(plan)
     
     account = Account.find_by_id(account.id)
