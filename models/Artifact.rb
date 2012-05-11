@@ -16,7 +16,9 @@ class Artifact
   key :version,     String  
   key :package_uri, String # URL to a zip package of the artifact.              
   key :homepage,    String      
-  key :slug,        String
+  key :slug,        String    
+  key :group,       String
+  key :client,      String
      
   # Other Artifacts         
   key :compatible_ids,   Array
