@@ -110,5 +110,8 @@ models:
 - multiple version management. link to specific versions      
 - copy key.
 
-Switch ext_name to Slug
-- add dbd_name to artifacts
+> Switch ext_name to Slug
+> add dbd_name to artifacts       
+
+- add more fields from manifests.
+- generate artifacts from yaml seeds 
