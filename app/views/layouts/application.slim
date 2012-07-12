@@ -5,7 +5,7 @@ html lang="en"
     title== (defined?(@title) ? @title : "DBD Forge")
     == css :app  
     == js :app
-    == yield :javascript  
+    - # yield :javascript  
   body
     .navbar
       .navbar-inner

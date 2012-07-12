@@ -4,7 +4,7 @@ Forge.controllers :accounts, :provides => [:json, :html] do
     halt 403, 'Login first' unless @account
   end
   
-  get :new do
+  get :new, :map => '/signup' do
     @account = Account.new
     respond(@account)
   end    

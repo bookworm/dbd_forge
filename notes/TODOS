@@ -108,7 +108,8 @@ models:
 - file uploads on artifacts.   
 - todo details about incompatibilities. not sure how to work this.    
 - multiple version management. link to specific versions      
-- copy key.
+- copy key.    
+- oauth on joomla side so we can "push" installs
 
 > Switch ext_name to Slug
 > add dbd_name to artifacts       

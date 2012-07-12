@@ -1,8 +1,8 @@
 # Enables support for Compass, a stylesheet authoring framework based on SASS.
 # See http://compass-style.org/ for more details.
-# Store Compass/SASS files (by default) within 'app/stylesheets'
+# Store Compass/SASS files (by default) within 'app/stylesheets'  
 module CompassInitializer
-  def self.registered(app)
+  def self.registered(app)   
     require 'sass/plugin/rack'   
     require 'bootstrap-sass'
 
@@ -15,7 +15,7 @@ module CompassInitializer
       config.images_dir      = "public/images"
       config.javascripts_dir = "public/js"
       config.output_style    = :compressed
-    end
+    end  
 
     Compass.configure_sass_plugin!
     Compass.handle_configuration_change!
